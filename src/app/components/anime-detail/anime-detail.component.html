@@ -1,0 +1,9 @@
+@if (anime) {
+    <div>
+        <h1>{{ anime.data.title }}</h1>
+        <img [src]="anime.data.images.jpg.image_url" alt="{{ anime.data.title }}" />
+        <p>{{ anime.data.synopsis }}</p>
+    </div>
+}
+
+  

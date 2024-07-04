@@ -1,0 +1,59 @@
+import { Component, OnInit } from '@angular/core';
+import { AnimeService } from '../../services/anime.service';
+import { MatListModule } from '@angular/material/list';
+import { RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+@Component({
+  selector: 'app-anime-recommendations',
+  templateUrl: './anime-recommendations.component.html',
+  styleUrls: ['./anime-recommendations.component.css'],
+  standalone: true,
+  imports: [MatListModule, RouterLink, MatIconModule, CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule]
+})
+export class AnimeRecommendationsComponent implements OnInit {
+  recommendations: any[] = [];
+  animeName: string = '';
+  currentAnimeIndex: number = 0;
+  loading: boolean = false;
+
+  constructor(private animeService: AnimeService) { }
+
+  ngOnInit(): void {
+  }
+
+  fetchRecommendations(): void {
+    if (this.animeName.trim()) {
+      this.loading = true;
+      this.animeService.searchAnime(this.animeName).subscribe(data => {
+        const anime = data.data[0];
+        if (anime) {
+          this.animeService.getRecommendations(anime.mal_id).subscribe(data => {
+            this.recommendations = data.data;
+            this.currentAnimeIndex = 0;
+            this.loading = false;
+          });
+        }
+      });
+    }
+  }
+
+  nextAnime(): void {
+    if (this.currentAnimeIndex < this.recommendations.length - 1) {
+      this.currentAnimeIndex++;
+    }
+  }
+
+  prevAnime(): void {
+    if (this.currentAnimeIndex > 0) {
+      this.currentAnimeIndex--;
+    }
+  }
+}
