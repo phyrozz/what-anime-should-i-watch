@@ -24,9 +24,9 @@
           <mat-icon>chevron_left</mat-icon>
         </button>
         <div class="flex flex-grow justify-center items-center text-white">
-          <mat-list-item [routerLink]="['/anime', recommendations[currentAnimeIndex].entry.mal_id]" class="flex flex-col w-full justify-center items-center text-center cursor-pointer">
+          <mat-list-item class="flex flex-col w-full justify-center items-center text-center">
             <p class="font-thin text-xl">Try watching this one?</p>
-            <img [src]="recommendations[currentAnimeIndex].entry.images.jpg.image_url" alt="{{ recommendations[currentAnimeIndex].entry.title }}">
+            <img class="cursor-pointer" (click)="openAnimeDetailDialog(recommendations[currentAnimeIndex])" [src]="recommendations[currentAnimeIndex].entry.images.jpg.image_url" alt="{{ recommendations[currentAnimeIndex].entry.title }}">
             <p class="font-bold pt-3">{{ recommendations[currentAnimeIndex].entry.title }}</p>
           </mat-list-item>
         </div>

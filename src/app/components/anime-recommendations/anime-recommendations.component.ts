@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { AnimeService } from '../../services/anime.service';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
@@ -10,19 +10,23 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { AnimeDetailComponent } from '../anime-detail/anime-detail.component';
 
 @Component({
   selector: 'app-anime-recommendations',
   templateUrl: './anime-recommendations.component.html',
   styleUrls: ['./anime-recommendations.component.css'],
   standalone: true,
-  imports: [MatListModule, RouterLink, MatIconModule, CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule]
+  imports: [MatListModule, RouterLink, MatIconModule, CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule, MatDialogModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnimeRecommendationsComponent implements OnInit {
   recommendations: any[] = [];
   animeName: string = '';
   currentAnimeIndex: number = 0;
   loading: boolean = false;
+  readonly animeDetailDialog = inject(MatDialog);
 
   constructor(private animeService: AnimeService) { }
 
@@ -55,5 +59,15 @@ export class AnimeRecommendationsComponent implements OnInit {
     if (this.currentAnimeIndex > 0) {
       this.currentAnimeIndex--;
     }
+  }
+
+  openAnimeDetailDialog(anime: any): void {
+    const dialogRef = this.animeDetailDialog.open(AnimeDetailComponent, {
+      data: anime
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle the dialog result if needed
+    });
   }
 }

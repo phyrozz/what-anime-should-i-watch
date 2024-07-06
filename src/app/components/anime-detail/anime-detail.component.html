@@ -1,9 +1,13 @@
 @if (anime) {
-    <div>
-        <h1>{{ anime.data.title }}</h1>
-        <img [src]="anime.data.images.jpg.image_url" alt="{{ anime.data.title }}" />
-        <p>{{ anime.data.synopsis }}</p>
-    </div>
+    <h2 matDialogTitle>{{ anime.data.title }}</h2>
+    <mat-dialog-content>
+        <div class="w-full flex flex-col justify-center items-center gap-3">
+            <img [src]="anime.data.images.jpg.image_url" alt="{{ anime.data.title }}" />
+            <p class="font-thin">{{ anime.data.synopsis }}</p>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
 }
-
   
