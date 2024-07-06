@@ -3,13 +3,15 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AnimeService } from '../../services/anime.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-anime-detail',
   templateUrl: './anime-detail.component.html',
   styleUrls: ['./anime-detail.component.css'],
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule],
+  imports: [MatDialogModule, MatButtonModule, CommonModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeDetailComponent implements OnInit {
@@ -27,6 +29,21 @@ export class AnimeDetailComponent implements OnInit {
       this.animeService.getAnime(this.anime.entry.mal_id).subscribe(data => {
         this.anime = data;
       });
+    }
+  }
+
+  getGenresString(): string {
+    return this.anime.data.genres.map((genre: any) => genre.name).join(', ');
+  }
+
+  getRatingColor(): string {
+    const rating = parseInt(this.anime.data.score);
+    if (rating >= 8) {
+      return 'text-green-600';
+    } else if (rating >= 6) {
+      return 'text-orange-600';
+    } else {
+      return 'text-red-600';
     }
   }
 }

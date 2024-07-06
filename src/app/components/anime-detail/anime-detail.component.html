@@ -2,8 +2,46 @@
     <h2 matDialogTitle>{{ anime.data.title }}</h2>
     <mat-dialog-content>
         <div class="w-full flex flex-col justify-center items-center gap-3">
-            <img [src]="anime.data.images.jpg.image_url" alt="{{ anime.data.title }}" />
+          <div class="grid grid-cols-2 w-full">
+            <div class="pr-2">
+              <div class="w-full leading-none pb-4">
+                <span class="flex flex-row gap-2 w-full items-end">
+                  <p class="text-lg font-bold leading-none">{{ anime.data.title_japanese }}</p>
+                  <p class="font-thin">{{ anime.data.year }}</p>
+                </span>
+                <p class="font-thin">{{ anime.data.title_english }}</p>
+                <p [ngClass]="getRatingColor()"><b>{{ anime.data.score }}</b></p>
+              </div>
+              <div class="w-full leading-none">
+                <p><b>Genre: </b>{{ getGenresString() }}</p>
+                <p><b>Episodes: </b>{{ anime.data.episodes }}</p>
+                <p><b>Duration: </b>{{ anime.data.duration }}</p>
+                <p><b>Rating: </b>{{ anime.data.rating }}</p>
+                <p><b>Status: </b>{{ anime.data.status }}</p>
+              </div>
+            </div>
+            <div class="pl-2">
+              <img [src]="anime.data.images.jpg.image_url" alt="{{ anime.data.title }}" />
+            </div>
+          </div>
+          <div class="w-full flex justify-center items-center gap-2 py-3">
+            @if (anime.data.url) {
+              <a mat-raised-button [href]="anime.data.url" target="_blank">
+                <span>Visit on MyAnimeList</span>
+                <mat-icon>open_in_new</mat-icon>
+              </a>
+            }
+            @if (anime.data.trailer.url) {
+              <a mat-raised-button [href]="anime.data.trailer.url" target="_blank">
+                <span>Watch Trailer</span>
+                <mat-icon>smart_display</mat-icon>
+              </a>
+            }
+          </div>
+          <div class="w-full">
+            <p class="font-thin text-2xl mt-2">Synopsis</p>
             <p class="font-thin">{{ anime.data.synopsis }}</p>
+          </div>
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
