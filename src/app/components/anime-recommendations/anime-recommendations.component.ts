@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { AnimeService } from '../../services/anime.service';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AnimeDetailComponent } from '../anime-detail/anime-detail.component';
 
 @Component({
@@ -18,7 +18,19 @@ import { AnimeDetailComponent } from '../anime-detail/anime-detail.component';
   templateUrl: './anime-recommendations.component.html',
   styleUrls: ['./anime-recommendations.component.css'],
   standalone: true,
-  imports: [MatListModule, RouterLink, MatIconModule, CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule, MatDialogModule],
+  imports: [
+    MatListModule, 
+    RouterLink, 
+    MatIconModule, 
+    CommonModule, 
+    FormsModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatButtonModule, 
+    MatCardModule, 
+    MatProgressSpinnerModule, 
+    MatDialogModule
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnimeRecommendationsComponent implements OnInit {
@@ -27,15 +39,16 @@ export class AnimeRecommendationsComponent implements OnInit {
   currentAnimeIndex: number = 0;
   loading: boolean = false;
   readonly animeDetailDialog = inject(MatDialog);
+  private cdr = inject(ChangeDetectorRef);
 
   constructor(private animeService: AnimeService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   fetchRecommendations(): void {
     if (this.animeName.trim()) {
       this.loading = true;
+      this.cdr.markForCheck();
       this.animeService.searchAnime(this.animeName).subscribe(data => {
         const anime = data.data[0];
         if (anime) {
@@ -43,6 +56,7 @@ export class AnimeRecommendationsComponent implements OnInit {
             this.recommendations = data.data;
             this.currentAnimeIndex = 0;
             this.loading = false;
+            this.cdr.markForCheck();
           });
         }
       });
@@ -64,10 +78,6 @@ export class AnimeRecommendationsComponent implements OnInit {
   openAnimeDetailDialog(anime: any): void {
     const dialogRef = this.animeDetailDialog.open(AnimeDetailComponent, {
       data: anime
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      // Handle the dialog result if needed
     });
   }
 }
