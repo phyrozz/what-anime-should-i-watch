@@ -5,10 +5,10 @@
     <mat-card class="md:w-96 w-full p-5 flex justify-center items-center shadow-2xl">
       <mat-form-field class="w-full">
         <mat-label>Enter an anime title</mat-label>
-        <input matInput placeholder="Try Steins;Gate?" [(ngModel)]="animeName" [ngModelOptions]="{standalone: true}">
+        <input matInput placeholder="Try Steins;Gate?" [(ngModel)]="animeName" [ngModelOptions]="{standalone: true}" (keydown.enter)="fetchRecommendations()">
       </mat-form-field>
       <div>
-        <button mat-flat-button (click)="fetchRecommendations()">Get Recommendations</button>
+        <button mat-flat-button (keydown.enter)="fetchRecommendations()" (click)="fetchRecommendations()">Get Recommendations</button>
       </div>
     </mat-card>
   
