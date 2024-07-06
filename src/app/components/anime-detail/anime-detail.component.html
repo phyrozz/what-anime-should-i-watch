@@ -2,8 +2,8 @@
     <h2 matDialogTitle>{{ anime.data.title }}</h2>
     <mat-dialog-content>
         <div class="w-full flex flex-col justify-center items-center gap-3">
-          <div class="grid grid-cols-2 w-full">
-            <div class="pr-2">
+          <div class="grid md:grid-cols-2 grid-cols-1 w-full">
+            <div class="md:pr-2 pr-0 md:pt-0 pt-5 md:order-first order-last">
               <div class="w-full leading-none pb-4">
                 <span class="flex flex-row gap-2 w-full items-end">
                   <p class="text-lg font-bold leading-none">{{ anime.data.title_japanese }}</p>
@@ -20,19 +20,19 @@
                 <p><b>Status: </b>{{ anime.data.status }}</p>
               </div>
             </div>
-            <div class="pl-2">
+            <div class="pl-2 w-full h-full flex justify-center items-center">
               <img [src]="anime.data.images.jpg.image_url" alt="{{ anime.data.title }}" />
             </div>
           </div>
-          <div class="w-full flex justify-center items-center gap-2 py-3">
+          <div class="w-full flex justify-center items-center gap-2 py-3 flex-wrap">
             @if (anime.data.url) {
-              <a mat-raised-button [href]="anime.data.url" target="_blank">
+              <a mat-flat-button [href]="anime.data.url" target="_blank">
                 <span>Visit on MyAnimeList</span>
                 <mat-icon>open_in_new</mat-icon>
               </a>
             }
             @if (anime.data.trailer.url) {
-              <a mat-raised-button [href]="anime.data.trailer.url" target="_blank">
+              <a mat-flat-button [href]="anime.data.trailer.url" target="_blank">
                 <span>Watch Trailer</span>
                 <mat-icon>smart_display</mat-icon>
               </a>
