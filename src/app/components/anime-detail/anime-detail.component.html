@@ -12,12 +12,16 @@
                 <p class="font-thin">{{ anime.data.title_english }}</p>
                 <p [ngClass]="getRatingColor()"><b>{{ anime.data.score }}</b></p>
               </div>
-              <div class="w-full leading-none">
+              <div class="w-full leading-tight">
                 <p><b>Genre: </b>{{ getGenresString() }}</p>
                 <p><b>Episodes: </b>{{ anime.data.episodes }}</p>
                 <p><b>Duration: </b>{{ anime.data.duration }}</p>
                 <p><b>Rating: </b>{{ anime.data.rating }}</p>
                 <p><b>Status: </b>{{ anime.data.status }}</p>
+              </div>
+              <div class="w-full leading-tight pt-5">
+                <p><b>{{anime.data.studios.length > 1 ? "Studios: " : "Studio: "}}</b>{{ getStudiosString() }}</p>
+                <p><b>Produced by: </b>{{ getProducersString() }}</p>
               </div>
             </div>
             <div class="pl-2 w-full h-full flex justify-center items-center">

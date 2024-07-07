@@ -36,6 +36,14 @@ export class AnimeDetailComponent implements OnInit {
     return this.anime.data.genres.map((genre: any) => genre.name).join(', ');
   }
 
+  getStudiosString(): string {
+    return this.anime.data.studios.map((studio: any) => studio.name).join(', ');
+  }
+
+  getProducersString(): string {
+    return this.anime.data.producers.map((producer: any) => producer.name).join(', ');
+  }
+
   getRatingColor(): string {
     const rating = parseInt(this.anime.data.score);
     if (rating >= 8) {
