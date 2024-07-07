@@ -1,12 +1,15 @@
 <mat-form-field class="w-full">
+  <mat-label>Enter an anime title</mat-label>
   <input type="text" matInput [formControl]="searchControl" [matAutocomplete]="auto" placeholder="Try Steins;Gate?">
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)" (displayWith)="displayFn($event)">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-      <div class="py-2 -space-y-2">
-          <p>{{ option.title }}</p>
-          <p class="text-xs font-thin">{{ option.title_english }}</p>
-      </div>
-    </mat-option>
+    @for (option of filteredOptions | async; track option) {
+      <mat-option [value]="option">
+        <div class="py-2 -space-y-2">
+            <p>{{ option.title }}</p>
+            <p class="text-xs font-thin">{{ option.title_english }}</p>
+        </div>
+      </mat-option>
+    }
   </mat-autocomplete>
 </mat-form-field>
   
