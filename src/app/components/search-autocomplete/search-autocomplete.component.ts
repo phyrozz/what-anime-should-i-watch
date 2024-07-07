@@ -47,7 +47,6 @@ export class SearchAutocompleteComponent {
   onOptionSelected(event: any) {
     const selectedAnime = event.option.value;
     this.animeSelected.emit(selectedAnime);
-    // Set the value of the search control to the anime title
     this.searchControl.setValue(selectedAnime.title, { emitEvent: false });
   }
 
