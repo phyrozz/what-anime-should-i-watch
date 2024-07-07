@@ -1,0 +1,9 @@
+<mat-form-field class="w-full">
+    <input type="text" matInput [formControl]="searchControl" [matAutocomplete]="auto" placeholder="Try Steins;Gate?">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)" (displayWith)="displayFn($event)">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{ option.title }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  

@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AnimeDetailComponent } from '../anime-detail/anime-detail.component';
+import { SearchAutocompleteComponent } from '../search-autocomplete/search-autocomplete.component';
 
 @Component({
   selector: 'app-anime-recommendations',
@@ -29,7 +30,8 @@ import { AnimeDetailComponent } from '../anime-detail/anime-detail.component';
     MatButtonModule, 
     MatCardModule, 
     MatProgressSpinnerModule, 
-    MatDialogModule
+    MatDialogModule,
+    SearchAutocompleteComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -63,6 +65,11 @@ export class AnimeRecommendationsComponent implements OnInit {
     }
   }
 
+  onAnimeSelected(anime: any): void {
+    this.animeName = anime.title;
+    this.fetchRecommendations();
+  }
+
   nextAnime(): void {
     if (this.currentAnimeIndex < this.recommendations.length - 1) {
       this.currentAnimeIndex++;
@@ -76,7 +83,7 @@ export class AnimeRecommendationsComponent implements OnInit {
   }
 
   openAnimeDetailDialog(anime: any): void {
-    const dialogRef = this.animeDetailDialog.open(AnimeDetailComponent, {
+    this.animeDetailDialog.open(AnimeDetailComponent, {
       data: anime
     });
   }
